@@ -1,0 +1,11 @@
+input = 1
+server = ['1', '2', '3']
+if input in server:
+	currentdir = "server1"
+
+if currentdir == "server1":
+	print("files, files, files")
+
+if input[0] == "less":
+	if input[1] == "file1":
+		print(filecontent)

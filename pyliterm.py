@@ -9,7 +9,7 @@
 
 ###Imports
 import time
-alllocations = ['/home/', "/home",'/']
+alllocations = ['~','/home/', "/home",'/','~']
 history = ['~']
 cdtimes = 1
 ###The starting location
@@ -17,57 +17,77 @@ cdtimes = 1
 
 #Defining what is used in the Terminal
 def ssh():
-	pass
-
-def scp():
-	pass
-
-def cat():
-	pass
-
-def firstcd(history, cdtimes, alllocations):
-	print("Time to get a moving grooving going.")
-	print("CD stands for change directory. Where would you like to go?")
-	location = input("{}@{} ~ $".format(name, computer)).split()
-	while location == "":
-		location = input("CD stands for change directory. Where would you like to go?").split()
-	print(location)
-	if len(location) != 0:
-		location = location[1]	
-		
-	if location[1] not in alllocations:
-		print("bash: cd: {}: No such file or directory".format(location[1]))
-		location = history[cdtimes-1]
-	nameandlocation = ("{} {} $".format(wholename, location))
-	cdtimes += 1
-	history.append(location)
-	print(history)
-	return location
-	return cdtimes
-
-def cd(history, cdtimes, alllocations):
-	print(moving)
 	if moving in alllocations:
 		location = ("{}".format(moving))
-		history.append(location)
-		cdtimes += 1
-		print(cdtimes)
-		return location, cdtimes
+		return location
 	else:
-		print("bash: cd: {}: No such file or directory".format(moving))
-		cdtimes += 1
-		location = history[cdtimes-1]
+		print("bash: cd: {}: No such file or directory. Moving back to home.".format(moving))
+		location = '~'
 		return location
 
+
+def firstcd(history, cdtimes, alllocations):
+	print("")
+	print("CD stands for change directory. Where would you like to go?")
+	
+	location = input("{}@{} ~ $".format(name, computer)).split()
+	moving = location
+	#print(moving)
+	
+	while moving == "":
+		location = input("CD stands for change directory. Where would you like to go?").split()
+		moving = location
+	#print(location)
+	if len(moving) != 0:
+		moving = moving[1]
+		#print(moving)
+		location = moving
+	if moving in alllocations:
+		location = moving
+		#print(location)
+	else:
+		print("bash: cd: {}: No such file or directory. Moving back to home.".format(location[1]))
+		location = '~'
+	#nameandlocation = ("{} {} $".format(wholename, location))
+	return location
+
+
+def cd(alllocations):
+	#print(moving)
+	if moving in alllocations:
+		location = ("{}".format(moving))
+		return location
+	else:
+		print("bash: cd: {}: No such file or directory. Moving back to home.".format(moving))
+		location = '~'
+		return location
 
 def cp():
 	pass
 
-def ls():
-	pass
+def firstls(location):
+	print("")
+	print("Using ls in your current directory will list all items in that folder.")
+	firstls = input("{} {} $".format(wholename, location))
+	if firstls == "ls":
+		pass
+	while firstls != "ls":
+		print("Using ls in your current directory will list all items in that folder.")
+		firstls = input("{} {} $".format(wholename, location))
+	if location in ["/"]:
+		print("   Home   Locked")
+	elif location in ["/home/","/home"]:
+		print("   textile.odt   texts.txt   spanish.txt")
+	elif location in ["/home/root/", "/home/root", "~"]:
+		print("    Empty.ogg")
 
-def location():
-	pass
+def ls(location):
+	if location in ["/"]:
+		print("   Home   Locked")
+	elif location in ["/home/","/home"]:
+		print("   textile.odt   texts.txt   spanish.txt")
+	elif location in ["/home/root/", "/home/root", "~"]:
+		print("    Empty.ogg")
 
 def opening():
 	print("Welcome to the Linux Terminal Simulator!")
@@ -99,19 +119,26 @@ wholename = "{}@{}".format(name, computer)
 print(wholename)
 ###Settable variables
 location = firstcd(history, cdtimes, alllocations)
+firstls(location)
 ###Necessary variables
 userhome = ['/home/{}'.format(name), '~', '/home/{}/'.format(name)]
 home = ['/home','/home/', 'home']
 alllocations.append(userhome[0])
+alllocations.append(userhome[2])
 
 going = True
 while going:
-	print(location)
+#	print(location)
 	userline = input("{} {} $".format(wholename, location)).split()
 	if 'cd' in userline:
-		moving = userline[1]
-		location = cd(history, cdtimes, alllocations)
+		if len(userline) < 2:
+			userline = input("{} {} $".format(wholename, location)).split()
+		else:
+			moving = userline[1]
+		location = cd(alllocations)
 	if 'ls' in userline:
-		ls()
+		ls(location)
+	if 'ssh' in userline:
+		ssh(location)
 	if 'exit' in userline:
 		going = False

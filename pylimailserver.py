@@ -1,7 +1,7 @@
 do = True
 from tabulate import tabulate
 currentdir = "l"
-name = input("admin@10.0.1.32 ")
+name = input("admin@10.160.1.32 ")
 server = ['ls']
 
 if name in server:

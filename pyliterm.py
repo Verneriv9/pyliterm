@@ -9,6 +9,7 @@
 
 ###Imports
 import time
+from tabulate import tabulate
 alllocations = ['~','/home/', "/home",'/','~']
 history = ['~']
 cdtimes = 1
@@ -16,15 +17,97 @@ cdtimes = 1
 #location = "~" ## /home/entered name
 
 #Defining what is used in the Terminal
-def ssh():
-	if moving in alllocations:
-		location = ("{}".format(moving))
-		return location
-	else:
-		print("bash: cd: {}: No such file or directory. Moving back to home.".format(moving))
-		location = '~'
-		return location
+def pylifac():
+	do = True
+	from tabulate import tabulate
+	currentdir = "l"
+	print("Welcome to the Texas Tech Faculty Listing")
+	name = input("root@10.160.1.244: ")
+	server = ['ls']
+	if name in server:
+	    currentdir = "server1"
+	if currentdir == "server1":
+		print("Faculty.odf")
+	while do == True:
+	    newname = input("root@10.160.1.244: ").split()
+	    if newname[0] == "less":
+	        if newname[1] == "Faculty.odf":
+	            print(tabulate([['Jane','Alah', ' Professor'], ['Taylor','Brown', 'TA'], ['John','Smith', 'Professor'], ['Sarah','Silver', 'Professor'], ['Seif','Tao', 'TA'], ['Lauren','Ulies', 'Professor'] , ['Martin','Wilson','TA']], headers=['First Name','Last Name', 'Position'], tablefmt='orgtbl'))
+	    if newname[0] == "exit":
+	        import txtechserver
+	        do = False
 
+def texastechserver():
+	do = True
+	currentdir = "l"
+	name = input("root@10.160.1.251: ")
+	server = ['ls', 'ssh root@10.160.1.244']
+
+	if name in server:
+		currentdir = "server1"
+
+	if currentdir == "server1":
+		print("Hint.txt, PW.docx, ClassSchedule.csv, ReadMe.txt")
+	while do == True:
+		newname = input("root@10.160.1.251: ").split()
+		if newname[0] == "less":
+			if newname[1]== "ReadMe.txt":
+				password = input("*Document Locked* - Enter Password: ")
+				if password == "RaiderPower":
+					print("Welcome new faculty! To get to your email server, connect via the admin account located at 10.160.1.32")
+			if newname[1] == "Hint.txt":
+				 print("This is where the information for each document is going to go")
+			if newname[1] == "PW.docx":
+				 print("This is File 2")
+			if newname[1] == "ClassSchedule.csv":
+				 print("Notes from IT: To connect to the faculty list, SSH into 10.160.1.244")
+		if newname[0] =="ls":
+			print("Hint.txt, PW.docx, ClassSchedule.csv")
+		if newname[0] =="ssh":
+			if newname[1] =="root@10.160.1.244":
+				import pylifac
+				do = False
+			if newname[1] =="admin@10.160.1.32":
+				import pylimailserver
+				do = False
+		if newname[0] =="exit":
+			##from pyliterm.py import cd():
+			do = False
+
+	##import pylifac
+
+
+def pylimailserver():
+	do = True
+	from tabulate import tabulate
+	currentdir = "l"
+	name = input("admin@10.160.1.32 ")
+	server = ['ls']
+
+	if name in server:
+	    print("Texas Tech Mail Accounts")
+	    print("------------------------")
+	    print(tabulate([['Jane','Alah', ' LOCKED'], ['Taylor','Brown', 'LOCKED'], ['John','Smith', '105mb'], ['Sarah','Silver', '256mb'], ['Seif','Tao', 'LOCKED'], ['Lauren','Ulies', 'LOCKED'] , ['Martin','Wilson','LOCKED']], headers=['First Name','Last Name', 'MailBox'], tablefmt='orgtbl'))
+	    print("Please Navigate to /mailbox/ to log in!")
+	newname = input("root@10.160.1.244: ").split()
+	if newname[0] == "cd":
+	    if newname[1] =="/mailbox/":
+	        print("Welcome to Texas Tech Remote Mail Server")
+	        email = input("Please Enter Your Email Address: ")
+	        if email == "john.smith@ttu.edu":
+	            print("You're in")
+
+def ssh(userline):
+#	print(userline)
+	if userline[1] =="admin@10.160.1.32":
+		import pylimailserver
+		pylimailserver()
+	if userline[1] =="admin@10.160.1.251":
+		import txtechserver
+		texastechserver()
+	if userline[1] =="admin@10.160.1.244":
+		import pylifac
+		pylifac()
 
 def firstcd(history, cdtimes, alllocations):
 	print("")
@@ -139,6 +222,7 @@ while going:
 	if 'ls' in userline:
 		ls(location)
 	if 'ssh' in userline:
-		ssh(location)
+		print('ssh occured')
+#		ssh(userline)
 	if 'exit' in userline:
 		going = False

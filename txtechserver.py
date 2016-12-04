@@ -1,4 +1,5 @@
 do = True
+import getpass
 currentdir = "l"
 name = input("root@10.160.1.251: ")
 server = ['ls', 'ssh root@10.160.1.244']
@@ -12,17 +13,27 @@ while do == True:
 	newname = input("root@10.160.1.251: ").split()
 	if newname[0] == "less":
 		if newname[1]== "ReadMe.txt":
-			password = input("*Document Locked* - Enter Password: ")
-			if password == "RaiderPower":
+			print("For your security, you will not be able to see yourself type")
+			password = getpass.getpass("*Document Locked* - Enter Password: ")
+			if password == "raiderpower":
 				print("Welcome new faculty! To get to your email server, connect via the admin account located at 10.160.1.32")
+			else:
+				print("******************************************ACCESS DENIED******************************************")
+				import txtechserver
 		if newname[1] == "Hint.txt":
-			 print("This is where the information for each document is going to go")
+			 print("""			Dear Dr.S,
+
+			In case you forget your password, like normal, What is the cheer you and I participated in with the whole crowd at our favorite past time last saturday?
+			Remember, all lowercase, all one word.
+			Cant wait to see you in class tomorrow :)
+
+			Love, Lacie""")
 		if newname[1] == "PW.docx":
 			 print("This is File 2")
 		if newname[1] == "ClassSchedule.csv":
 			 print("Notes from IT: To connect to the faculty list, SSH into 10.160.1.244")
 	if newname[0] =="ls":
-		print("Hint.txt, PW.docx, ClassSchedule.csv")
+		print("Hint.txt, PW.docx, ClassSchedule.csv, ReadMe.txt")
 	if newname[0] =="ssh":
 		if newname[1] =="root@10.160.1.244":
 			import pylifac

@@ -1,5 +1,6 @@
 ###Linux Quest
 
+###Creators: Verneri Thomason, Jacob Gus
 ###Linux Terminal Simulator for those not willing to install Linux or unable to run a Virtual Machine.
 
 ###Starting Date: Saturday, December 3rd, 2016. 9:15am CST
